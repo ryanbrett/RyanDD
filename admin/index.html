@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Update Feed</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Admin - Update Feed</h1>
+    </header>
+    <main>
+        <form id="login-form">
+            <label for="admin-password">Password:</label>
+            <input type="password" id="admin-password" required>
+            <button type="submit">Login</button>
+        </form>
+        <form id="update-feed-form" style="display: none;">
+            <label for="feed-title">Title:</label>
+            <input type="text" id="feed-title" name="title" required>
+            <label for="feed-content">Content:</label>
+            <textarea id="feed-content" name="content" required></textarea>
+            <button type="submit">Add to Feed</button>
+        </form>
+        <form id="update-gallery-form" style="display: none;">
+            <label for="gallery-src">Image URL:</label>
+            <input type="text" id="gallery-src" name="src">
+            <label for="gallery-alt">Alt Text:</label>
+            <input type="text" id="gallery-alt" name="alt" required>
+            <label for="gallery-upload">Upload Image:</label>
+            <input type="file" id="gallery-upload" name="upload">
+            <button type="submit">Add to Gallery</button>
+        </form>
+        <div id="admin-message"></div>
+        <section id="admin-feed" style="display: none;">
+            <h2>Manage Feed</h2>
+            <div id="admin-feed-content"></div>
+        </section>
+        <section id="admin-gallery" style="display: none;">
+            <h2>Manage Gallery</h2>
+            <div id="admin-gallery-content" class="gallery-grid"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Projects</p>
+    </footer>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Custom Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+  <script src="js/calculate.js" defer></script>
+  <script src="js/search-part.js" defer></script>  
+</head>
+<body>
+<div>
+  <h1>Standard Procedures v0.1.10</h1>
+  <div>
+    <label for="product">Product Type:</label>
+    <select id="product" onchange="updateOptions(), calculate()">
+      <option value="aluminum_sign">Aluminum Sign</option>
+      <option value="acm_sign">ACM</option>      
+      <option value="hdpe_sign">HDPE</option> 
+      <option value="coroplast">Coroplast</option>           
+      <option value="opus_cut_decal">Opus Cut Decal</option>
+      <option value="digital_print">Digital Print</option>
+      <option value="banner">Banner</option>
+    </select>
+  </div>
+  <div id="alGaugeOptions">
+    <br>
+    <label for="alGauge_options">Aluminum Gauge:</label>
+    <select id="alGauge_options" onchange="calculate()">
+      <option value=".024">.024</option>
+      <option value=".040">.040</option>
+      <option value=".050">.050</option>
+      <option value=".063">.063</option>
+      <option value=".080">.080</option>
+      <option value=".090">.090</option>
+      <option value=".125">.125</option>
+    </select>
+  </div>
+  <div id="hdpeOptions" style="display: none;">
+    <br>
+    <label for="hdpe_options">HDPE Gauge:</label>
+    <select id="hdpe_options" onchange="calculate()">
+      <option value=".023">.023</option>
+      <option value=".110">.110</option>
+    </select>
+  </div>
+  <div id="digitalPrintOptions" style="display: none;">
+    <br>
+    <label for="digital_print_options">Digital Print Options:</label>
+    <select id="digital_print_options" onchange="calculate()">
+      <option value="54">54" (RV, Hi-Tac)</option>
+      <option value="48">48" (EG)</option>
+      <option value="36">36"</option>
+      <option value="30">30"</option>
+      <option value="24">24"</option>
+      <option value="22">22" (Pavement)</option>
+      <option value="18">18"</option>
+      <option value="16">16" (HIP)</option>
+    </select>
+  </div>
+  <br>
+  <label for="itemWidth">Item Size Width:</label>
+  <input type="number" id="itemWidth" placeholder="Width in Inches" value="36">
+  <br>
+  <label for="itemHeight">Item Size Height:</label>
+  <input type="number" id="itemHeight" placeholder="Height in Inches" value="36">
+  <br>
+  <br>
+  <button onclick="calculate()">Calculate</button>
+  <br>
+  <br>
+  <label id="resultLabel" class="result-label" style="display: none;"></label>
+  <p id="result"></p>
+  <br>
+  <br>
+  <label id="resultLabel2" class="result-label" style="display: none;"></label>
+  <p id="result2"></p>
+  <br>
+  <br>
+  <label id="resultLabel3" class="result-label" style="display: none;"></label>
+  <p id="result3"></p>
+</div>
+
+  <h1>Part Search</h1>
+  <label for="name">Enter Part Name:</label>
+  <input type="text" id="name" name="name"><br><br>
+  <button onclick="searchParts()">Search</button>
+  
+  <div id="partResult">
+      <!-- Search results will be displayed here -->
+  </div>  
+
+
+</body>
+</html>

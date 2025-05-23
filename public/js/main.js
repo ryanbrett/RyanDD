@@ -1,5 +1,6 @@
 import { loadFeed, displayFeed } from './feed.js';
 import { loadGallery, displayGallery } from './gallery.js';
+import { setupAdminForms } from './admin.js';
 
 let currentPage = 1;
 let loading = false;
@@ -8,6 +9,7 @@ const pageSize = 5;
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Load initial feed and gallery
+  setupAdminForms();
   await initFeed();
   await initGallery();
 

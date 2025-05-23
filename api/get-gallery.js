@@ -3,7 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 
 export default async function handler(req, res) {
-  const filePath = path.join(process.cwd(), 'json/gallery.json');
+  const filePath = path.join(process.cwd(), '/json/gallery.json');
 
   if (req.method !== 'GET') return res.status(405).json({ success: false });
 

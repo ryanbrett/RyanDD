@@ -3,7 +3,7 @@ import path from 'path';
 
 export default async function handler(req, res) {
   const adminPassword = 'pwopwo';
-  const filePath = path.join(process.cwd(), 'json/feed.json');
+  const filePath = path.join(process.cwd(), '/json/feed.json');
 
   if (req.method !== 'POST') return res.status(405).json({ success: false });
 

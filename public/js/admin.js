@@ -8,7 +8,7 @@ export function setupAdminForms() {
     const content = document.getElementById('feed-content').value;
     const password = document.getElementById('feed-password').value;
 
-    const res = await fetch('/api/update-feed.js', {
+    const res = await fetch('/api/update-feed', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title, content, password })
@@ -25,7 +25,7 @@ export function setupAdminForms() {
     const alt = document.getElementById('gallery-alt').value;
     const password = document.getElementById('gallery-password').value;
 
-    const res = await fetch('/api/update-gallery.js', {
+    const res = await fetch('/api/update-gallery', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ src, alt, password })

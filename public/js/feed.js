@@ -20,3 +20,21 @@ export function displayFeed(items) {
     feedContent.appendChild(div);
   });
 }
+
+export async function updateFeed({ password, title, content }) {
+  try {
+    const res = await fetch('/api/update-feed', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password, title, content }),
+    });
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error('Failed to update feed:', error);
+    return { success: false };
+  }
+}

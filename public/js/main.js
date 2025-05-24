@@ -1,40 +1,32 @@
-import { loadFeed, displayFeed } from './feed.js';
-import { loadGallery, displayGallery } from './gallery.js';
-import { setupAdminForms } from './admin.js';
+document.getElementById('feed-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-let currentPage = 1;
-let loading = false;
-let totalItems = 0;
-const pageSize = 5;
+  const title = document.getElementById('feed-title').value.trim();
+  const content = document.getElementById('feed-content').value.trim();
+  const status = document.getElementById('submit-status');
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Load initial feed and gallery
-  setupAdminForms();
-  await initFeed();
-  await initGallery();
-
-  // Scroll event for infinite feed
-  window.addEventListener('scroll', handleScroll);
-});
-
-async function initFeed() {
-  const data = await loadFeed(currentPage);
-  displayFeed(data.items);
-  totalItems = data.total || 0;
-}
-
-async function initGallery() {
-  const galleryItems = await loadGallery();
-  displayGallery(galleryItems);
-}
-
-async function handleScroll() {
-  const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
-  if (nearBottom && !loading && (currentPage * pageSize < totalItems)) {
-    loading = true;
-    currentPage++;
-    const data = await loadFeed(currentPage);
-    displayFeed(data.items);
-    loading = false;
+  if (!title || !content) {
+    status.textContent = 'Please fill out both fields.';
+    return;
   }
-}
+
+  try {
+    const res = await fetch('/api/update-feed', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, content })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      status.textContent = '✅ Feed updated successfully!';
+      document.getElementById('feed-form').reset();
+    } else {
+      status.textContent = `❌ ${data.message || 'Failed to update feed.'}`;
+    }
+  } catch (err) {
+    console.error('Error submitting feed:', err);
+    status.textContent = '❌ Error connecting to server.';
+  }
+});

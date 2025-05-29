@@ -1,7 +1,6 @@
 // /api/update-feed.js
 
-import { promises as fs } from 'fs';
-import path from 'path';
+import { sql } from '@vercel/postgres';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -10,23 +9,18 @@ export default async function handler(req, res) {
 
   try {
     const { title, content } = req.body;
+
     if (!title || !content) {
       return res.status(400).json({ message: 'Missing title or content' });
     }
 
-    const filePath = path.join(process.cwd(), 'json', 'feed.json');
-    const fileData = await fs.readFile(filePath, 'utf8');
-    const feed = JSON.parse(fileData);
+    const result = await sql`
+      INSERT INTO feed (title, content)
+      VALUES (${title}, ${content})
+      RETURNING id, title, content, created;
+    `;
 
-    const newItem = {
-      id: Date.now(),
-      title,
-      content,
-      created: new Date().toISOString()
-    };
-
-    feed.unshift(newItem);
-    await fs.writeFile(filePath, JSON.stringify(feed, null, 2));
+    const newItem = result.rows[0];
 
     res.status(200).json({ message: 'Feed updated successfully', item: newItem });
   } catch (error) {

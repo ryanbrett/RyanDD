@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/ryanbrett/ryanmccullough.dev/issues"
   },
-  "homepage": "https://github.com/ryanbrett/ryanmccullough.dev#readme"
+  "homepage": "https://github.com/ryanbrett/ryanmccullough.dev#readme",
+  "dependencies": {
+    "@vercel/postgres": "^0.10.0"
+  },
+  "devDependencies": {}
 }

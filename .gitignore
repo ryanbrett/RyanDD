@@ -10,3 +10,4 @@ Thumbs.db
 
 # Ignore environment config (if you ever use it)
 .env
+.vercel

@@ -1,6 +1,7 @@
 {
   "name": "ryanmccullough.dev",
   "version": "1.0.0",
+  "type": "module",
   "description": "(Ai) This is a Vercel-hosted portfolio for my web design and development work.",
   "main": "index.js",
   "scripts": {

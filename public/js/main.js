@@ -1,3 +1,7 @@
+//only added code
+import { loadFeed, displayFeed } from './feed.js';
+//only added code
+
 document.getElementById('feed-form').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -29,4 +33,11 @@ document.getElementById('feed-form').addEventListener('submit', async (e) => {
     console.error('Error submitting feed:', err);
     status.textContent = '❌ Error connecting to server.';
   }
+});
+
+//below and top line is only added code
+// Load feed items on page load
+document.addEventListener('DOMContentLoaded', async () => {
+  const items = await loadFeed();
+  displayFeed(items);
 });

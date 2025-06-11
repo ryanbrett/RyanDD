@@ -6,7 +6,7 @@ document.getElementById('feed-form').addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const title = document.getElementById('feed-title').value.trim();
-  const content = document.getElementById('feed-content').value.trim();
+  const content = document.getElementById('feed-input').value.trim();
   const status = document.getElementById('submit-status');
 
   if (!title || !content) {

@@ -41,3 +41,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const items = await loadFeed();
   displayFeed(items);
 });
+
+//Show/Hide admin tools
+document.getElementById('toggle-admin').addEventListener('click', () => {
+  const adminTools = document.getElementById('admin-tools');
+  const toggleBtn = document.getElementById('toggle-admin');
+
+  const isHidden = adminTools.style.display === 'none';
+
+  adminTools.style.display = isHidden ? 'block' : 'none';
+  toggleBtn.textContent = isHidden ? '▲ Hide Admin Tools' : '▼ Show Admin Tools';
+});

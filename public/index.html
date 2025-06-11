@@ -16,7 +16,7 @@
 
             <form id="feed-form">
                 <h3>Post to Feed</h3>
-                <input type="text" id="feed-title" name="title" placeholder="Title" required>
+                <input type="text" id="feed-input" name="title" placeholder="Title" required>
                 <textarea id="feed-content" name="content" placeholder="Content" required></textarea>
                 <!--
                 <input type="password" id="feed-password" placeholder="Password" required>
@@ -36,14 +36,14 @@
         <section id="progress-feed">
             <h2>Progress Feed | Coding</h2>
             <div id="feed-content">
-                <!-- Feed content will be loaded here via Ajax -->
+                <!-- Feed content will be loaded here via serverless Ajax -->
             </div>
            <div id="loading" style="display: none;">Loading more shit...</div>            
         </section>
         <section id="image-gallery">
             <h2>Image Gallery</h2>
             <div id="gallery-content" class="gallery-grid">
-                <!-- Gallery images will be loaded here via Ajax -->
+                <!-- Gallery images will be loaded here via serverless Ajax -->
             </div>
         </section>
     </main>

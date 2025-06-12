@@ -52,3 +52,39 @@ document.getElementById('toggle-admin').addEventListener('click', () => {
   adminTools.style.display = isHidden ? 'block' : 'none';
   toggleBtn.textContent = isHidden ? '▲ Hide Admin Tools' : '▼ Show Admin Tools';
 });
+
+// LOAD GALLERY
+import { loadGallery } from './gallery.js';
+
+document.getElementById('gallery-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const src = document.getElementById('gallery-src').value.trim();
+  const alt = document.getElementById('gallery-alt').value.trim();
+  const password = document.getElementById('gallery-password').value.trim();
+
+  try {
+    const res = await fetch('/api/update-gallery', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ src, alt, password })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert('✅ Image added to gallery');
+      document.getElementById('gallery-form').reset();
+      loadGallery();
+    } else {
+      alert(`❌ ${data.message}`);
+    }
+  } catch (err) {
+    console.error(err);
+    alert('❌ Failed to submit image');
+  }
+});
+
+// Load gallery on page load
+document.addEventListener('DOMContentLoaded', () => {
+  loadGallery();
+});
+

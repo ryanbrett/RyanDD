@@ -60,13 +60,14 @@ document.getElementById('gallery-form').addEventListener('submit', async (e) => 
   e.preventDefault();
   const src = document.getElementById('gallery-src').value.trim();
   const alt = document.getElementById('gallery-alt').value.trim();
-  const password = document.getElementById('gallery-password').value.trim();
+  const status = document.getElementById('submit-status');
+  //  const password = document.getElementById('gallery-password').value.trim();
 
   try {
     const res = await fetch('/api/update-gallery', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ src, alt, password })
+      body: JSON.stringify({ src, alt })  // ✅ Removed password
     });
 
     const data = await res.json();
@@ -87,4 +88,3 @@ document.getElementById('gallery-form').addEventListener('submit', async (e) => 
 document.addEventListener('DOMContentLoaded', () => {
   loadGallery();
 });
-

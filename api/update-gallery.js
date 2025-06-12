@@ -4,6 +4,8 @@
 // ✅ Let's double check your update-gallery.js file.
 // Here's a clean working template you can use:
 
+import { sql } from '@vercel/postgres';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -21,10 +23,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { sql } = require('@vercel/postgres');
-
     await sql`INSERT INTO gallery (src, alt) VALUES (${src}, ${alt})`;
-
     return res.status(200).json({ message: 'Image added successfully' });
   } catch (err) {
     console.error('Database error:', err);

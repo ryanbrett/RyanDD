@@ -1,31 +1,33 @@
-export default async function handler(req, res) {
-  console.log('Admin password from ENV:', process.env.ADMIN_PASSWORD);
-  console.log('Admin password from request:', req.body.password);
+// This is likely in your `api/update-gallery.js` or another API route.
+// The error `SyntaxError: Unexpected token '{'` suggests a malformed export or top-level syntax issue.
 
-  if (req.method !== 'POST') return res.status(405).end();
+// ✅ Let's double check your update-gallery.js file.
+// Here's a clean working template you can use:
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
 
   const { src, alt, password } = req.body;
 
-  if (password !== process.env.ADMIN_PASSWORD) {
+  if (!src || !alt || !password) {
+    return res.status(400).json({ message: 'Missing fields' });
+  }
+
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+  if (password !== ADMIN_PASSWORD) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-      // /api/update-gallery.js
-      import { sql } from '@vercel/postgres';
-      
-      export default async function handler(req, res) {
-        if (req.method !== 'POST') return res.status(405).end();
-      
-        const { src, alt, password } = req.body;
-        if (password !== process.env.ADMIN_PASSWORD)
-          return res.status(401).json({ message: 'Unauthorized' });
-      
-        try {
-          await sql`INSERT INTO gallery (src, alt) VALUES (${src}, ${alt})`;
-          res.status(200).json({ message: 'Image added' });
-        } catch (err) {
-          console.error(err);
-          res.status(500).json({ message: 'DB error' });
-        }
-      }
+  try {
+    const { sql } = require('@vercel/postgres');
+
+    await sql`INSERT INTO gallery (src, alt) VALUES (${src}, ${alt})`;
+
+    return res.status(200).json({ message: 'Image added successfully' });
+  } catch (err) {
+    console.error('Database error:', err);
+    return res.status(500).json({ message: 'Server error' });
+  }
 }

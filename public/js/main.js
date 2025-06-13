@@ -61,19 +61,25 @@ document.getElementById('gallery-form').addEventListener('submit', async (e) => 
   const src = document.getElementById('gallery-src').value.trim();
   const alt = document.getElementById('gallery-alt').value.trim();
   const status = document.getElementById('submit-status');
-  //  const password = document.getElementById('gallery-password').value.trim();
+
+  const form = document.getElementById('gallery-form');
+  const editingId = form.dataset.editingId;
+
+  const method = editingId ? 'PUT' : 'POST';
+  const url = editingId ? `/api/update-gallery?id=${editingId}` : '/api/update-gallery';
 
   try {
-    const res = await fetch('/api/update-gallery', {
-      method: 'POST',
+    const res = await fetch(url, {
+      method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ src, alt })  // ✅ Removed password
+      body: JSON.stringify({ src, alt })
     });
 
     const data = await res.json();
     if (res.ok) {
-      alert('✅ Image added to gallery');
-      document.getElementById('gallery-form').reset();
+      alert(editingId ? '✅ Image updated' : '✅ Image added');
+      form.reset();
+      delete form.dataset.editingId;
       loadGallery();
     } else {
       alert(`❌ ${data.message}`);
@@ -83,6 +89,7 @@ document.getElementById('gallery-form').addEventListener('submit', async (e) => 
     alert('❌ Failed to submit image');
   }
 });
+
 
 // Load gallery on page load
 document.addEventListener('DOMContentLoaded', () => {

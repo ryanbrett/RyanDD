@@ -84,21 +84,21 @@ main {
 }
 
 .feed-item .edit-feed {
-  background-color: #007BFF;
+  background-color: #333;
   color: #fff;
 }
 
 .feed-item .edit-feed:hover {
-  background-color: #0056b3;
+  background-color: #444;
 }
 
 .feed-item .delete-feed {
-  background-color: #dc3545;
+  background-color: #333;
   color: #fff;
 }
 
 .feed-item .delete-feed:hover {
-  background-color: #a71d2a;
+  background-color: #444;
 }
 
 #loading {
@@ -138,7 +138,7 @@ main {
 }
 
 #toggle-admin {
-    background-color: #eee;
+    background-color: #333;
     border: 1px solid #ccc;
     padding: 0.5em 1em;
     border-radius: 4px;
@@ -148,13 +148,14 @@ main {
 }
 
 #toggle-admin:hover {
-    background-color: #ddd;
+    background-color: #444;
 }
 
 #admin-tools {
     background: #fff;
     padding: 1.5em;
     border-radius: 5px;
+    border: 2px solid #ff0000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 2em;
     animation: fadeIn 1s ease-in-out;

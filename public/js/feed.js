@@ -24,8 +24,8 @@ export function displayFeed(items) {
       <p>${item.content}</p>
       <small>${new Date(item.created).toLocaleString()}</small>
       <div class="actions">
-        <button class="edit-feed" data-id="${item.id}" data-title="${item.title}" data-content="${item.content}">✏️ Edit</button>
-        <button class="delete-feed" data-id="${item.id}">🗑️ Delete</button>
+        <button class="edit-feed" data-id="${item.id}" data-title="${item.title}" data-content="${item.content}">✏️</button>
+        <button class="delete-feed" data-id="${item.id}">🗑️</button>
       </div>
     `;
     container.appendChild(div);

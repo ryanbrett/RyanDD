@@ -41,14 +41,64 @@ main {
     margin-top: 1em;
 }
 
-.feed-item {
+/* .feed-item {
     border-bottom: 1px solid #ddd;
     padding: 1em 0;
     animation: fadeInUp 0.5s ease-in-out;
-}
+} */
 
 .feed-item:last-child {
     border-bottom: none;
+}
+
+/* Feed Item Layout */
+.feed-item {
+  position: relative;
+  padding: 1em;
+  border-bottom: 1px solid #ddd;
+}
+
+.feed-item h3 {
+  margin: 0 0 0.25em 0;
+}
+
+.feed-item p {
+  margin: 0.25em 0;
+}
+
+.feed-item small {
+  color: #777;
+}
+
+.feed-item .actions {
+  margin-top: 0.5em;
+}
+
+.feed-item .actions button {
+  font-size: 0.9em;
+  padding: 0.3em 0.5em;
+  margin-right: 0.3em;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+
+.feed-item .edit-feed {
+  background-color: #333;
+  color: #fff;
+}
+
+.feed-item .edit-feed:hover {
+  background-color: #444;
+}
+
+.feed-item .delete-feed {
+  background-color: #333;
+  color: #fff;
+}
+
+.feed-item .delete-feed:hover {
+  background-color: #444;
 }
 
 #loading {
@@ -87,6 +137,86 @@ main {
     display: block;
 }
 
+#toggle-admin {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #ccc;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+#toggle-admin:hover {
+    background-color: #444;
+}
+
+#admin-tools {
+    background: #fff;
+    padding: 1.5em;
+    border-radius: 5px;
+    border: 2px solid #ff0000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2em;
+    animation: fadeIn 1s ease-in-out;
+}
+
+#admin-tools h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+#admin-tools form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    margin-bottom: 2em;
+    padding: 1em;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+#admin-tools form h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+#admin-tools input[type="text"],
+#admin-tools input[type="password"],
+#admin-tools textarea {
+    padding: 0.5em;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#admin-tools textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#admin-tools button {
+    align-self: start;
+    padding: 0.6em 1.2em;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+#admin-tools button:hover {
+    background-color: #555;
+}
+
+#submit-status {
+    margin: 0;
+    font-size: 0.9em;
+    color: #007700;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -100,4 +230,19 @@ main {
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+#gallery-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-top: 1em;
+  background: #fff;
+  padding: 1em;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+#admin-tools {
+  margin-bottom: 2em;
 }

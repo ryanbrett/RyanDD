@@ -63,6 +63,10 @@ export function displayFeed(items) {
       document.getElementById('feed-title').value = title;
       document.getElementById('feed-input-content').value = content;
       document.getElementById('feed-form').dataset.editingId = id;
+
+      // Show admin tools section
+      document.getElementById('admin-tools').style.display = 'block';
+      document.getElementById('toggle-admin').textContent = '▲ Hide Admin Tools';
     });
   });
 }

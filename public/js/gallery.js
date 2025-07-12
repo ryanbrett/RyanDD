@@ -46,6 +46,10 @@ export async function loadGallery() {
         document.getElementById('gallery-src').value = src;
         document.getElementById('gallery-alt').value = alt;
         document.getElementById('gallery-form').dataset.editingId = id;
+
+        // Show admin tools section
+        document.getElementById('admin-tools').style.display = 'block';
+        document.getElementById('toggle-admin').textContent = '▲ Hide Admin Tools';
       });
     });
 

@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await sql`SELECT title, content, created FROM feed ORDER BY created DESC LIMIT 10;`;
+    const result = await sql`SELECT id, title, content, created FROM feed ORDER BY created DESC LIMIT 10;`;
 
     return res.status(200).json({ items: result.rows });
   } catch (error) {

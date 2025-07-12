@@ -61,7 +61,7 @@ export function displayFeed(items) {
       const content = btn.getAttribute('data-content');
 
       document.getElementById('feed-title').value = title;
-      document.getElementById('feed-content').value = content;
+      document.getElementById('feed-input-content').value = content;
       document.getElementById('feed-form').dataset.editingId = id;
     });
   });
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.getElementById('feed-title').value;
-    const content = document.getElementById('feed-content').value;
+    const content = document.getElementById('feed-input-content').value;
     const editingId = form.dataset.editingId;
 
     const url = editingId ? `/api/update-feed?id=${editingId}` : '/api/update-feed';

@@ -1,3 +1,9 @@
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
 export async function loadFeed() {
   try {
     const res = await fetch('/api/get-feed');
@@ -24,7 +30,7 @@ export function displayFeed(items) {
       <p>${item.content}</p>
       <small>${new Date(item.created).toLocaleString()}</small>
       <div class="actions">
-        <button class="edit-feed" data-id="${item.id}" data-title="${item.title}" data-content="${item.content}">✏️</button>
+        <button class="edit-feed" data-id="${item.id}" data-title="${escapeHTML(item.title)}" data-content="${escapeHTML(item.content)}">✏️</button>
         <button class="delete-feed" data-id="${item.id}">🗑️</button>
       </div>
     `;

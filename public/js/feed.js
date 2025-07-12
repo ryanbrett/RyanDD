@@ -36,7 +36,11 @@ export function displayFeed(items) {
     btn.addEventListener('click', async () => {
       const id = btn.getAttribute('data-id');
       if (confirm('Delete this post?')) {
-        const res = await fetch(`/api/delete-feed?id=${id}`, { method: 'DELETE' });
+        const res = await fetch('/api/delete-feed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
         const result = await res.json();
         if (res.ok) {
           alert('✅ Post deleted');

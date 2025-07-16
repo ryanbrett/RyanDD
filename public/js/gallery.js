@@ -12,14 +12,16 @@ export async function loadGallery() {
       div.innerHTML = `
         <img src="${item.src}" alt="${item.alt}">
         <p>${item.alt}</p>
-        <button class="edit-btn" data-id="${item.id}" data-src="${item.src}" data-alt="${item.alt}">🖊 Edit</button>
-        <button class="delete-btn" data-id="${item.id}">🗑 Delete</button>
+        <div class="actions">
+          <button class="edit-gallery" data-id="${item.id}" data-src="${item.src}" data-alt="${item.alt}">✏️</button>
+          <button class="delete-gallery" data-id="${item.id}">🗑️</button>
+        </div>
       `;
       container.appendChild(div);
     });
 
     // Set up delete event listeners
-    document.querySelectorAll('.delete-btn').forEach(btn => {
+    document.querySelectorAll('.delete-gallery').forEach(btn => {
       btn.addEventListener('click', async () => {
         const id = btn.getAttribute('data-id');
         if (confirm('Delete this image?')) {
@@ -36,7 +38,7 @@ export async function loadGallery() {
     });
 
     // Set up edit event listeners
-    document.querySelectorAll('.edit-btn').forEach(btn => {
+    document.querySelectorAll('.edit-gallery').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
         const src = btn.getAttribute('data-src');

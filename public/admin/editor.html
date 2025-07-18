@@ -1,1 +1,27 @@
-
+<!-- /public/admin/editor.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Editor</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css" />
+</head>
+<body>
+  <main class="editor">
+    <h1>Live HTML Editor</h1>
+    <label for="file-select">Choose file:</label>
+    <select id="file-select">
+      <option value="index.html">index.html</option>
+      <option value="about.html">about.html</option>
+    </select>
+    <textarea id="editor"></textarea>
+    <button id="save-btn">Save</button>
+    <p id="save-status"></p>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

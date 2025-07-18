@@ -11,6 +11,7 @@ export async function loadGallery() {
       div.className = 'gallery-item';
       div.innerHTML = `
         <img src="${item.src}" alt="${item.alt}">
+        <p>${item.alt}</p>
         <div class="actions">
           <button class="edit-gallery" data-id="${item.id}" data-src="${item.src}" data-alt="${item.alt}">✏️</button>
           <button class="delete-gallery" data-id="${item.id}">🗑️</button>

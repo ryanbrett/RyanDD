@@ -1,55 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryan McCullough | Develop & Design</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Ryan McCullough</title>
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-    <header>
-        <h1>Ryan McCullough | Develop & Design</h1>
-    </header>
-    <main>
-        <section id="admin-tools-section">
-        <button id="toggle-admin" style="margin-bottom: 1em;">▼ Show Admin Tools</button>
+  <header>
+    <h1>Ryan McCullough</h1>
+    <p class="summary">
+      Welcome to my digital garden — a snapshot of tools, thoughts, and projects.
+    </p>
+    <nav>
+      <a href="/resources.html">Resources</a>
+      <a href="/blog.html">Blog</a>
+    </nav>
+  </header>
 
-        <div id="admin-tools" style="display:none;">
-            <h2>Admin Tools</h2>
-            <form id="feed-form">
-                <h3>Post to Feed</h3>
-                <input type="text" id="feed-title" name="title" placeholder="Title" required>
-                <textarea id="feed-input-content" name="content" placeholder="Content" required></textarea>
-                <button type="submit">Submit</button>
-            </form>
-            <p id="submit-status"></p>
+  <main>
+    <section>
+      <h2>Quick Links</h2>
+      <ul>
+        <li><a href="/resources.html">Resource List</a></li>
+        <li><a href="/blog.html">Latest Blog Posts</a></li>
+      </ul>
+    </section>
+  </main>
 
-            <form id="gallery-form">
-                <h3>Add to Gallery</h3>
-                <input type="text" id="gallery-src" placeholder="Image URL" required>
-                <input type="text" id="gallery-alt" placeholder="Alt text" required>
-                <!-- <input type="password" id="gallery-password" placeholder="Password" required> -->
-                <button type="submit">Submit Image</button>
-            </form>
-        </section>
-        
-        <section id="progress-feed">
-            <h2>Progress Feed | Coding</h2>
-            <div id="feed-content">
-                <!-- Feed content will be loaded here via serverless Ajax -->
-            </div>
-           <div id="loading" style="display: none;">Loading more shit...</div>            
-        </section>
-        <section id="image-gallery">
-            <h2>Image Gallery</h2>
-            <div id="gallery-content" class="gallery-grid">
-                <!-- Gallery images will be loaded here via serverless Ajax -->
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 My Interests</p>
-    </footer>
-    <script type="module" src="js/main.js"></script>
+  <footer>
+    <p>&copy; 2025 Ryan McCullough</p>
+  </footer>
 </body>
 </html>

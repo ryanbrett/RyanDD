@@ -3,7 +3,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background: #f4f4f4;
+    background: #e9e9e9;
     color: #333;
 }
 
@@ -20,8 +20,102 @@ header h1 {
     animation: fadeInDown 1s ease-in-out;
 }
 
+header nav {
+    margin-top: 1em;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin: 0 0.5em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header nav a:hover {
+    background-color: #fff;
+    color: #333;
+}
+
 main {
+    max-width: 800px;
+    margin: 2em auto;
     padding: 2em;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+main h2 {
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+main ul {
+    list-style: none;
+    padding: 0;
+}
+
+main li {
+    margin-bottom: 1em;
+}
+
+main li a {
+    display: block;
+    padding: 1em;
+    text-decoration: none;
+    color: #333;
+    background: #f9f9f9;
+    border-radius: 5px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+main li a:hover {
+    background-color: #f4f4f4;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+article {
+    background: #fff;
+    padding: 1.5em;
+    margin-bottom: 2em;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+article h2 {
+    margin-top: 0;
+}
+
+.date {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 1em;
+}
+
+.resource-list li {
+    background: #f9f9f9;
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 1em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resource-list a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.resource-list a:hover {
+    text-decoration: underline;
 }
 
 #progress-feed {

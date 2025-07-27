@@ -36,45 +36,6 @@ export function displayFeed(items) {
     `;
     container.appendChild(div);
   });
-
-  // Delete
-  document.querySelectorAll('.delete-feed').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const id = btn.getAttribute('data-id');
-      if (confirm('Delete this post?')) {
-        const res = await fetch('/api/delete-feed', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id })
-        });
-        const result = await res.json();
-        if (res.ok) {
-          alert('✅ Post deleted');
-          const items = await loadFeed();
-          displayFeed(items);
-        } else {
-          alert(`❌ ${result.message}`);
-        }
-      }
-    });
-  });
-
-  // Edit
-  document.querySelectorAll('.edit-feed').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-id');
-      const title = btn.getAttribute('data-title');
-      const content = btn.getAttribute('data-content');
-
-      document.getElementById('feed-title').value = title;
-      document.getElementById('feed-input-content').value = content;
-      document.getElementById('feed-form').dataset.editingId = id;
-
-      // Show admin tools section
-      document.getElementById('admin-tools').style.display = 'block';
-      document.getElementById('toggle-admin').textContent = '▲ Hide Admin Tools';
-    });
-  });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

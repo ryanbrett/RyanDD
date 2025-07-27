@@ -50,14 +50,11 @@ document.getElementById('gallery-form').addEventListener('submit', async (e) => 
 });
 
 
-// Load gallery on page load
+// Load gallery and feed on page load
 document.addEventListener('DOMContentLoaded', () => {
   loadGallery();
+  loadFeed();
 });
-
-
-// Initial load of feed items
-document.addEventListener('DOMContentLoaded', loadFeed);
 
 
 // Handle form submission for new posts

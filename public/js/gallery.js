@@ -2,8 +2,8 @@ export async function loadGallery() {
   try {
     const res = await fetch('/api/get-gallery');
     const data = await res.json();
-
     const container = document.getElementById('gallery-content');
+    if (!container) return;
     container.innerHTML = '';
 
     data.items.forEach(item => {

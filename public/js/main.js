@@ -1,189 +1,191 @@
 import { loadFeed, displayFeed } from './feed.js';
-
-
-//Show/Hide admin tools
-document.getElementById('toggle-admin').addEventListener('click', () => {
-  const adminTools = document.getElementById('admin-tools');
-  const toggleBtn = document.getElementById('toggle-admin');
-
-  const isHidden = adminTools.style.display === 'none';
-
-  adminTools.style.display = isHidden ? 'block' : 'none';
-  toggleBtn.textContent = isHidden ? '▲ Hide Admin Tools' : '▼ Show Admin Tools';
-});
-
-// LOAD GALLERY
 import { loadGallery } from './gallery.js';
 
-document.getElementById('gallery-form').addEventListener('submit', async (e) => {
+// --- UTILITY FUNCTIONS ---
+function
+escapeHTML(str) {
+  const div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+
+// --- DOM ELEMENTS ---
+const feedContent = document.getElementById('feed-content');
+const galleryContent = document.getElementById('gallery-content');
+const feedForm = document.getElementById('feed-form');
+const galleryForm = document.getElementById('gallery-form');
+const feedTitleInput = document.getElementById('feed-title');
+const feedContentInput = document.getElementById('feed-input-content');
+const gallerySrcInput = document.getElementById('gallery-src');
+const galleryAltInput = document.getElementById('gallery-alt');
+const toggleAdminBtn = document.getElementById('toggle-admin');
+const adminTools = document.getElementById('admin-tools');
+
+
+// --- EVENT LISTENERS ---
+
+// Toggle Admin Tools
+toggleAdminBtn.addEventListener('click', () => {
+  const isHidden = adminTools.style.display === 'none';
+  adminTools.style.display = isHidden ? 'block' : 'none';
+  toggleAdminBtn.textContent = isHidden ? '▲ Hide Admin Tools' : '▼ Show Admin Tools';
+});
+
+// Feed Form Submission (Add/Update)
+feedForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const src = document.getElementById('gallery-src').value.trim();
-  const alt = document.getElementById('gallery-alt').value.trim();
-  const status = document.getElementById('submit-status');
+  const title = feedTitleInput.value.trim();
+  const content = feedContentInput.value.trim();
+  const editingId = feedForm.dataset.editingId;
 
-  const form = document.getElementById('gallery-form');
-  const editingId = form.dataset.editingId;
+  if (!title || !content) {
+    alert('❌ Title and content are required.');
+    return;
+  }
 
+  const url = editingId ? `/api/update-feed?id=${editingId}` : '/api/update-feed';
   const method = editingId ? 'PUT' : 'POST';
-  const url = editingId ? `/api/update-gallery?id=${editingId}` : '/api/update-gallery';
 
   try {
     const res = await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ src, alt })
+      body: JSON.stringify({ title, content }),
     });
+    const result = await res.json();
 
-    const data = await res.json();
     if (res.ok) {
-      alert(editingId ? '✅ Image updated' : '✅ Image added');
-      form.reset();
-      delete form.dataset.editingId;
-      loadGallery();
+      alert(`✅ ${result.message}`);
+      feedForm.reset();
+      delete feedForm.dataset.editingId;
+      const items = await loadFeed();
+      displayFeed(items);
     } else {
-      alert(`❌ ${data.message}`);
+      alert(`❌ ${result.message}`);
     }
   } catch (err) {
-    console.error(err);
-    alert('❌ Failed to submit image');
+    console.error('Feed form submission error:', err);
+    alert('❌ An error occurred.');
   }
 });
 
+// Gallery Form Submission (Add/Update)
+galleryForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const src = gallerySrcInput.value.trim();
+  const alt = galleryAltInput.value.trim();
+  const editingId = galleryForm.dataset.editingId;
 
-// Load gallery and feed on page load
-document.addEventListener('DOMContentLoaded', () => {
-  loadGallery();
-  loadFeed();
-});
+  if (!src || !alt) {
+    alert('❌ Image URL and alt text are required.');
+    return;
+  }
 
-
-// Handle form submission for new posts
-document.getElementById('feed-form').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const title = document.getElementById('feed-title').value;
-  const content = document.getElementById('feed-input').value; // Corrected ID
+  const url = editingId ? `/api/update-gallery?id=${editingId}` : '/api/update-gallery';
+  const method = editingId ? 'PUT' : 'POST';
 
   try {
-    const response = await fetch('/api/update-feed', {
-      method: 'POST',
+    const res = await fetch(url, {
+      method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, content })
+      body: JSON.stringify({ src, alt }),
     });
+    const result = await res.json();
 
-    const data = await response.json();
-    if (response.ok) {
-      alert('Post added successfully!');
-      document.getElementById('feed-form').reset();
-      loadFeed(); // Reload feed to show new post
+    if (res.ok) {
+      alert(`✅ ${result.message}`);
+      galleryForm.reset();
+      delete galleryForm.dataset.editingId;
+      await loadGallery();
     } else {
-      alert(`Error: ${data.message}`);
+      alert(`❌ ${result.message}`);
     }
-  } catch (error) {
-    console.error('Error adding post:', error);
-    alert('Failed to add post.');
+  } catch (err) {
+    console.error('Gallery form submission error:', err);
+    alert('❌ An error occurred.');
   }
 });
 
+// Feed Content Event Delegation (Edit/Delete)
+feedContent.addEventListener('click', async (e) => {
+  const target = e.target;
+  const post = target.closest('.post');
+  if (!post) return;
 
-// Event delegation for edit and delete buttons on feed items
-document.getElementById('feed-content').addEventListener('click', async (event) => {
-  const target = event.target;
-  const postElement = target.closest('.post');
-  if (!postElement) return;
+  const id = post.dataset.id;
 
-  const id = postElement.dataset.id;
+  // Handle Edit
+  if (target.classList.contains('edit-btn')) {
+    feedTitleInput.value = target.dataset.title;
+    feedContentInput.value = target.dataset.content;
+    feedForm.dataset.editingId = id;
+    feedTitleInput.focus();
+  }
 
+  // Handle Delete
   if (target.classList.contains('delete-btn')) {
     if (confirm('Are you sure you want to delete this post?')) {
       try {
-        const response = await fetch(`/api/update-feed?id=${id}`, {
-          method: 'DELETE'
-        });
-        if (response.ok) {
-          postElement.remove();
-          alert('Post deleted successfully!');
+        const res = await fetch(`/api/delete-feed?id=${id}`, { method: 'DELETE' });
+        const result = await res.json();
+        if (res.ok) {
+          alert(`✅ ${result.message}`);
+          const items = await loadFeed();
+          displayFeed(items);
         } else {
-          const data = await response.json();
-          alert(`Error: ${data.message}`);
+          alert(`❌ ${result.message}`);
         }
-      } catch (error) {
-        console.error('Error deleting post:', error);
-        alert('Failed to delete post.');
+      } catch (err) {
+        console.error('Error deleting post:', err);
+        alert('❌ An error occurred while deleting the post.');
       }
     }
   }
+});
 
-  if (target.classList.contains('edit-btn')) {
-    const titleElement = postElement.querySelector('h3');
-    const contentElement = postElement.querySelector('p');
+// Gallery Content Event Delegation (Edit/Delete)
+galleryContent.addEventListener('click', async (e) => {
+  const target = e.target;
+  const item = target.closest('.gallery-item');
+  if (!item) return;
 
-    // Store original content in case of cancellation
-    const originalTitle = titleElement.textContent;
-    const originalContent = contentElement.textContent;
+  const id = target.dataset.id;
 
-    titleElement.contentEditable = true;
-    contentElement.contentEditable = true;
-    titleElement.focus();
+  // Handle Edit
+  if (target.classList.contains('edit-gallery')) {
+    gallerySrcInput.value = target.dataset.src;
+    galleryAltInput.value = target.dataset.alt;
+    galleryForm.dataset.editingId = id;
+    gallerySrcInput.focus();
+  }
 
-    // Store the original edit button
-    const originalEditButton = target;
-
-    // Create Save and Cancel buttons
-    const saveButton = document.createElement('button');
-    saveButton.textContent = 'Save';
-    saveButton.className = 'save-btn';
-
-    const cancelButton = document.createElement('button');
-    cancelButton.textContent = 'Cancel';
-    cancelButton.className = 'cancel-btn';
-
-    // Replace Edit button with Save and Cancel
-    originalEditButton.style.display = 'none'; // Hide the original edit button
-    postElement.appendChild(saveButton);
-    postElement.appendChild(cancelButton);
-
-    const cleanup = () => {
-      titleElement.contentEditable = false;
-      contentElement.contentEditable = false;
-      saveButton.removeEventListener('click', handleSave);
-      cancelButton.removeEventListener('click', handleCancel);
-      saveButton.remove();
-      cancelButton.remove();
-      originalEditButton.style.display = ''; // Show the original edit button
-    };
-
-    const handleSave = async () => {
-      const newTitle = titleElement.textContent;
-      const newContent = contentElement.textContent;
-
+  // Handle Delete
+  if (target.classList.contains('delete-gallery')) {
+    if (confirm('Are you sure you want to delete this gallery item?')) {
       try {
-        const response = await fetch(`/api/update-feed?id=${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: newTitle, content: newContent })
-        });
-
-        if (response.ok) {
-          alert('Post updated successfully!');
-          cleanup();
+        const res = await fetch(`/api/delete-gallery?id=${id}`, { method: 'DELETE' });
+        const result = await res.json();
+        if (res.ok) {
+          alert(`✅ ${result.message}`);
+          await loadGallery();
         } else {
-          const data = await response.json();
-          alert(`Error: ${data.message}`);
+          alert(`❌ ${result.message}`);
         }
-      } catch (error) {
-        console.error('Error updating post:', error);
-        alert('Failed to update post.');
-        cleanup(); // Ensure cleanup even on error
+      } catch (err) {
+        console.error('Error deleting gallery item:', err);
+        alert('❌ An error occurred while deleting the item.');
       }
-    };
-
-    const handleCancel = () => {
-      titleElement.textContent = originalTitle;
-      contentElement.textContent = originalContent;
-      cleanup();
-    };
-
-    saveButton.addEventListener('click', handleSave);
-    cancelButton.addEventListener('click', handleCancel);
+    }
   }
 });
+
+
+// --- INITIALIZATION ---
+async function init() {
+  const items = await loadFeed();
+  displayFeed(items);
+  await loadGallery();
+}
+
+document.addEventListener('DOMContentLoaded', init);
